@@ -36,22 +36,25 @@ if __name__ == "__main__":
     print(f"exporting {LASTFM_USERNAME}'s metrics")
     
     while True:
-        info = client.getInfos()
-        isPlaying = client.isPlaying()
+        try:
+            info = client.getInfos()
+            isPlaying = client.isPlaying()
         
-        playCountGauge.set(info.play_count)
-        artistCountGauge.set(info.artist_count)
-        trackCountGauge.set(info.track_count)
-        albumCountGauge.set(info.album_count)
-        isPlayingGauge.set(int(isPlaying))
+            playCountGauge.set(info.play_count)
+            artistCountGauge.set(info.artist_count)
+            trackCountGauge.set(info.track_count)
+            albumCountGauge.set(info.album_count)
+            isPlayingGauge.set(int(isPlaying))
         
-        # 1 <= limit <= 1000
-        toptracks = client.getTopTracks(limit=1000)
+            # 1 <= limit <= 1000
+            toptracks = client.getTopTracks(limit=1000)
         
-        for track in toptracks:
-            trackGauge.labels(
-                artist=track.artist,
-                name=track.name
-            ).set(track.playcount)
+            for track in toptracks:
+                trackGauge.labels(
+                    artist=track.artist,
+                    name=track.name
+                ).set(track.playcount)
+        except:
+            print("Failed to fetch infos")
         
         sleep(SAMPLE_RATE)

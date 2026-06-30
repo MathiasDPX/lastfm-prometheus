@@ -20,10 +20,10 @@ class UserInfo:
         self.age = int(user["age"])
         self.realname = user["realname"]
 
-        self.play_count = int(user.get("playcount", "0"))
-        self.artist_count = int(user.get("artist_count", "0"))
-        self.track_count = int(user.get("track_count", "0"))
-        self.album_count = int(user.get("album_count", "0"))
+        self.play_count = int(user["playcount"])
+        self.artist_count = int(user["artist_count"])
+        self.track_count = int(user["track_count"])
+        self.album_count = int(user["album_count"])
 
 
 class TopTrack:
@@ -31,7 +31,7 @@ class TopTrack:
         self.name = data["name"]
         self.artist = data["artist"]["name"]
         self.rank = int(data["@attr"]["rank"])
-        self.playcount = int(data.get("playcount", "0"))
+        self.playcount = int(data["playcount"])
 
 
 class LastFMClient:
