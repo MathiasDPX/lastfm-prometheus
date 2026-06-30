@@ -65,6 +65,13 @@ class LastFMClient:
         data = r.json()
 
         return [TopTrack(trackdata) for trackdata in data["toptracks"]["track"]]
+    
+    def isPlaying(self):
+        r = self._make_request("user.getRecentTracks")
+        data = r.json()
+        track = data['recenttracks']['track'][0]
+        
+        return track.get("@attr", {}).get("nowplaying", "").lower() == "true"
 
 
 if __name__ == "__main__":
