@@ -11,6 +11,7 @@ LASTFM_APIKEY = getenv("LASTFM_APIKEY")
 SAMPLE_RATE = int(getenv("SAMPLE_RATE", 60))
 HTTP_ADDR = getenv("HTTP_ADDR", "0.0.0.0")
 HTTP_PORT = int(getenv("HTTP_PORT", 8000))
+METRICS_PREFIX = getenv("METRICS_PREFIX", "lastfm_")
 
 if LASTFM_USERNAME is None:
     print("Missing LASTFM_USERNAME environment variable")
@@ -21,12 +22,12 @@ if LASTFM_APIKEY is None:
 
 client = LastFMClient(LASTFM_USERNAME, LASTFM_APIKEY)
 
-playCountGauge = Gauge("play_count", "Number of scrobbles")
-artistCountGauge = Gauge("artist_count", "Number of unique artists scrobbled")
-trackCountGauge = Gauge("track_count", "Number of unique tracks scrobbled")
-albumCountGauge = Gauge("album_count", "Number of unique albums scrobbled")
-trackGauge = Gauge("tracks", "Tracks", ["artist", "name"])
-isPlayingGauge = Gauge("isplaying", "Is Playing")
+playCountGauge = Gauge(METRICS_PREFIX+"play_count", "Number of scrobbles")
+artistCountGauge = Gauge(METRICS_PREFIX+"artist_count", "Number of unique artists scrobbled")
+trackCountGauge = Gauge(METRICS_PREFIX+"track_count", "Number of unique tracks scrobbled")
+albumCountGauge = Gauge(METRICS_PREFIX+"album_count", "Number of unique albums scrobbled")
+trackGauge = Gauge(METRICS_PREFIX+"tracks", "Tracks", ["artist", "name"])
+isPlayingGauge = Gauge(METRICS_PREFIX+"isplaying", "Is Playing")
 
 if __name__ == "__main__":
     
